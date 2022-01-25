@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/adamgibbons/ics.git"
+    "url": "https://github.com/TheVilfer/ics"
   },
   "keywords": [
     "ical",
@@ -24,12 +24,12 @@
     "events",
     "alarms"
   ],
-  "author": "Adam Gibbons <adam@agibbons.com> (http://agibbons.com/)",
+  "author": "Serge Polin <dev.vilfer@gmail.com> (https://github.com/TheVilfer)",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/adamgibbons/ics/issues"
+    "url": "https://github.com/TheVilfer/ics/issues"
   },
-  "homepage": "https://github.com/adamgibbons/ics",
+  "homepage": "https://github.com/TheVilfer/ics",
   "devDependencies": {
     "@babel/core": "^7.6.2",
     "@babel/preset-env": "^7.6.2",
