@@ -1,5 +1,7 @@
 import dayjs from 'dayjs';
-import { expect } from 'chai'
+import {
+  expect
+} from 'chai'
 import {
   formatEvent,
   buildEvent
@@ -22,166 +24,254 @@ describe('pipeline.formatEvent', () => {
     expect(formattedEvent).to.contain('END:VCALENDAR')
   })
   it('writes a title', () => {
-    const event = buildEvent({ title: 'foo bar' })
+    const event = buildEvent({
+      title: 'foo bar'
+    })
     const formattedEvent = formatEvent(event)
     expect(formattedEvent).to.contain('SUMMARY:foo bar')
   })
   it('writes a start date-time', () => {
-    const event = buildEvent({ start: [2017, 5, 15, 10, 0] })
+    const event = buildEvent({
+      start: [2017, 5, 15, 10, 0]
+    })
     const formattedEvent = formatEvent(event)
     expect(formattedEvent).to.contain('DTSTART:2017051')
   })
   it('writes an end date-time', () => {
-    const event = buildEvent({ end: [2017, 5, 15, 11, 0] })
+    const event = buildEvent({
+      end: [2017, 5, 15, 11, 0]
+    })
     const formattedEvent = formatEvent(event)
     expect(formattedEvent).to.contain('DTEND:2017051')
   })
   it('writes a start date-time, taking the given date as local by default and outputting is as UTC by default', () => {
-    const event = buildEvent({ start: [2017, 5, 15, 10, 0] })
+    const event = buildEvent({
+      start: [2017, 5, 15, 10, 0]
+    })
     const formattedEvent = formatEvent(event)
     const now = dayjs(new Date(2017, 5 - 1, 15, 10, 0)).utc().format('YYYYMMDDTHHmm00')
-    expect(formattedEvent).to.contain('DTSTART:'+now+'Z')
+    expect(formattedEvent).to.contain('DTSTART:' + now + 'Z')
   })
   it('writes a start date-time, taking the given date as local by default and outputting is as UTC if requested', () => {
-    const event = buildEvent({ start: [2017, 5, 15, 10, 0], startOutputType: 'utc' })
+    const event = buildEvent({
+      start: [2017, 5, 15, 10, 0],
+      startOutputType: 'utc'
+    })
     const formattedEvent = formatEvent(event)
     const now = dayjs(new Date(2017, 5 - 1, 15, 10, 0)).utc().format('YYYYMMDDTHHmm00')
-    expect(formattedEvent).to.contain('DTSTART:'+now+'Z')
+    expect(formattedEvent).to.contain('DTSTART:' + now + 'Z')
   })
   it('writes a start date-time, taking the given date as local by default and outputting is as Local (floating) if requested', () => {
-    const event = buildEvent({ start: [2017, 5, 15, 10, 0], startOutputType: 'local' })
+    const event = buildEvent({
+      start: [2017, 5, 15, 10, 0],
+      startOutputType: 'local'
+    })
     const formattedEvent = formatEvent(event)
     expect(formattedEvent).to.contain('DTSTART:20170515T100000')
     expect(formattedEvent).to.not.contain('DTSTART:20170515T100000Z')
   })
   it('writes a start date-time, taking the given date as local if requested and outputting is as UTC by default', () => {
-    const event = buildEvent({ start: [2017, 5, 15, 10, 0], startInputType: 'local' })
+    const event = buildEvent({
+      start: [2017, 5, 15, 10, 0],
+      startInputType: 'local'
+    })
     const formattedEvent = formatEvent(event)
     const now = dayjs(new Date(2017, 5 - 1, 15, 10, 0)).utc().format('YYYYMMDDTHHmm00')
-    expect(formattedEvent).to.contain('DTSTART:'+now+'Z')
+    expect(formattedEvent).to.contain('DTSTART:' + now + 'Z')
   })
   it('writes a start date-time, taking the given date as local if requested and outputting is as UTC if requested', () => {
-    const event = buildEvent({ start: [2017, 5, 15, 10, 0], startInputType: 'local', startOutputType: 'utc' })
+    const event = buildEvent({
+      start: [2017, 5, 15, 10, 0],
+      startInputType: 'local',
+      startOutputType: 'utc'
+    })
     const formattedEvent = formatEvent(event)
     const now = dayjs(new Date(2017, 5 - 1, 15, 10, 0)).utc().format('YYYYMMDDTHHmm00')
-    expect(formattedEvent).to.contain('DTSTART:'+now+'Z')
+    expect(formattedEvent).to.contain('DTSTART:' + now + 'Z')
   })
   it('writes a start date-time, taking the given date as local if requested and outputting is as Local (floating) if requested', () => {
-    const event = buildEvent({ start: [2017, 5, 15, 10, 0], startInputType: 'local', startOutputType: 'local' })
+    const event = buildEvent({
+      start: [2017, 5, 15, 10, 0],
+      startInputType: 'local',
+      startOutputType: 'local'
+    })
     const formattedEvent = formatEvent(event)
     expect(formattedEvent).to.contain('DTSTART:20170515T100000')
     expect(formattedEvent).to.not.contain('DTSTART:20170515T100000Z')
   })
   it('writes a start date-time, taking the given date as UTC if requested and outputting is as UTC by default', () => {
-    const event = buildEvent({ start: [2017, 5, 15, 10, 0], startInputType: 'utc' })
+    const event = buildEvent({
+      start: [2017, 5, 15, 10, 0],
+      startInputType: 'utc'
+    })
     const formattedEvent = formatEvent(event)
     expect(formattedEvent).to.contain('DTSTART:20170515T100000Z')
   })
   it('writes a start date-time, taking the given date as UTC if requested and outputting is as UTC if requested', () => {
-    const event = buildEvent({ start: [2017, 5, 15, 10, 0], startInputType: 'utc', startOutputType: 'utc' })
+    const event = buildEvent({
+      start: [2017, 5, 15, 10, 0],
+      startInputType: 'utc',
+      startOutputType: 'utc'
+    })
     const formattedEvent = formatEvent(event)
     expect(formattedEvent).to.contain('DTSTART:20170515T100000Z')
   })
   it('writes a start date-time, taking the given date as UTC if requested and outputting is as Local (floating) if requested', () => {
-    const event = buildEvent({ start: [2017, 5, 15, 10, 0], startInputType: 'utc', startOutputType: 'local' })
+    const event = buildEvent({
+      start: [2017, 5, 15, 10, 0],
+      startInputType: 'utc',
+      startOutputType: 'local'
+    })
     const formattedEvent = formatEvent(event)
     const now = dayjs(Date.UTC(2017, 5 - 1, 15, 10, 0)).format('YYYYMMDDTHHmm00')
-    expect(formattedEvent).to.contain('DTSTART:'+now)
-    expect(formattedEvent).to.not.contain('DTSTART:'+now+'Z')
+    expect(formattedEvent).to.contain('DTSTART:' + now)
+    expect(formattedEvent).to.not.contain('DTSTART:' + now + 'Z')
   })
   it('writes a created timestamp', () => {
-    const event = buildEvent({ created: [2017, 5, 15, 10, 0] })
+    const event = buildEvent({
+      created: [2017, 5, 15, 10, 0]
+    })
     const formattedEvent = formatEvent(event)
     expect(formattedEvent).to.contain('CREATED:20170515')
   })
   it('writes a lastModified timestamp', () => {
-    const event = buildEvent({ lastModified: [2017, 5, 15, 10, 0] })
+    const event = buildEvent({
+      lastModified: [2017, 5, 15, 10, 0]
+    })
     const formattedEvent = formatEvent(event)
     expect(formattedEvent).to.contain('LAST-MODIFIED:20170515')
   })
   it('writes a cal name', () => {
-    const event = buildEvent({ calName: 'John\'s Calendar' })
+    const event = buildEvent({
+      calName: 'John\'s Calendar'
+    })
     const formattedEvent = formatEvent(event)
     expect(formattedEvent).to.contain('X-WR-CALNAME:John\'s Calendar')
+    expect(formattedEvent).to.contain('NAME:John\'s Calendar')
   })
   it('writes a html content and folds correctly', () => {
-    const event = buildEvent({ htmlContent: '<!DOCTYPE html><html><body><p>This is<br>test<br>html code.</p></body></html>' })
+    const event = buildEvent({
+      htmlContent: '<!DOCTYPE html><html><body><p>This is<br>test<br>html code.</p></body></html>'
+    })
     const formattedEvent = formatEvent(event)
     expect(formattedEvent).to.contain(`X-ALT-DESC;FMTTYPE=text/html:<!DOCTYPE html><html><body><p>This is<br>test<\r\n\tbr>html code.</p></body></html>`)
   })
   it('writes a sequence', () => {
-    const event = buildEvent({ sequence: 8 })
+    const event = buildEvent({
+      sequence: 8
+    })
     const formattedEvent = formatEvent(event)
     expect(formattedEvent).to.contain('SEQUENCE:8')
   })
   it('writes a description', () => {
-    const event = buildEvent({ description: 'bar baz' })
+    const event = buildEvent({
+      description: 'bar baz'
+    })
     const formattedEvent = formatEvent(event)
     expect(formattedEvent).to.contain('DESCRIPTION:bar baz')
   })
   it('escapes characters in text types', () => {
-    const event = buildEvent({ title: 'colon: semi; comma, period. slash\\', description: 'colon: semi; comma, period. slash\\' })
+    const event = buildEvent({
+      title: 'colon: semi; comma, period. slash\\',
+      description: 'colon: semi; comma, period. slash\\'
+    })
     const formattedEvent = formatEvent(event)
     expect(formattedEvent).to.contain('DESCRIPTION:colon: semi\\; comma\\, period. slash\\\\')
     expect(formattedEvent).to.contain('SUMMARY:colon: semi\\; comma\\, period. slash\\\\')
   })
   it('folds a long description', () => {
-    const event = buildEvent({ description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.' })
+    const event = buildEvent({
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+    })
     const formattedEvent = formatEvent(event)
     expect(formattedEvent).to.contain('DESCRIPTION:Lorem ipsum dolor sit amet\\, consectetur adipiscing elit\\, sed \r\n\tdo eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad \r\n\tminim veniam\\, quis nostrud exercitation ullamco laboris nisi ut aliquip e\r\n\tx ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptat\r\n\te velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaec\r\n\tat cupidatat non proident\\, sunt in culpa qui officia deserunt mollit anim\r\n\t id est laborum.')
   })
   it('writes a url', () => {
-    const event = buildEvent({ url: 'http://www.example.com/' })
+    const event = buildEvent({
+      url: 'http://www.example.com/'
+    })
     const formattedEvent = formatEvent(event)
     expect(formattedEvent).to.contain('URL:http://www.example.com/')
   })
   it('writes a geo', () => {
-    const event = buildEvent({ geo: { lat: 1.234, lon: -9.876 } })
+    const event = buildEvent({
+      geo: {
+        lat: 1.234,
+        lon: -9.876
+      }
+    })
     const formattedEvent = formatEvent(event)
     expect(formattedEvent).to.contain('GEO:1.234;-9.876')
   })
   it('writes a location', () => {
-    const event = buildEvent({ location: 'Folsom Field, University of Colorado at Boulder' })
+    const event = buildEvent({
+      location: 'Folsom Field, University of Colorado at Boulder'
+    })
     const formattedEvent = formatEvent(event)
     expect(formattedEvent).to.contain('LOCATION:Folsom Field\\, University of Colorado at Boulder')
   })
   it('writes a status', () => {
-    const event = buildEvent({ status: 'tentative' })
+    const event = buildEvent({
+      status: 'tentative'
+    })
     const formattedEvent = formatEvent(event)
     expect(formattedEvent).to.contain('STATUS:tentative')
   })
   it('writes categories', () => {
-    const event = buildEvent({ categories: ['boulder', 'running'] })
+    const event = buildEvent({
+      categories: ['boulder', 'running']
+    })
     const formattedEvent = formatEvent(event)
     expect(formattedEvent).to.contain('CATEGORIES:boulder,running')
   })
 
   it('writes all-day events', () => {
-    const eventWithOnlyStart = buildEvent({ start: [2017, 5, 15] })
+    const eventWithOnlyStart = buildEvent({
+      start: [2017, 5, 15]
+    })
     const formattedStartEvent = formatEvent(eventWithOnlyStart)
     expect(formattedStartEvent).to.contain('DTSTART;VALUE=DATE:20170515')
     expect(formattedStartEvent).to.not.contain('DTEND')
 
-    const eventWithStartAndEnd = buildEvent({ start: [2017, 5, 15], end: [2017, 5, 18] })
+    const eventWithStartAndEnd = buildEvent({
+      start: [2017, 5, 15],
+      end: [2017, 5, 18]
+    })
     const formattedStartEndEvent = formatEvent(eventWithStartAndEnd)
     expect(formattedStartEndEvent).to.contain('DTSTART;VALUE=DATE:20170515')
     expect(formattedStartEndEvent).to.contain('DTEND;VALUE=DATE:20170518')
   })
 
   it('writes attendees', () => {
-    const event = buildEvent({ attendees: [
-      {name: 'Adam Gibbons', email: 'adam@example.com'},
-      {name: 'Brittany Seaton', email: 'brittany@example.com', rsvp: true }
-    ]})
+    const event = buildEvent({
+      attendees: [{
+          name: 'Adam Gibbons',
+          email: 'adam@example.com'
+        },
+        {
+          name: 'Brittany Seaton',
+          email: 'brittany@example.com',
+          rsvp: true
+        }
+      ]
+    })
     const formattedEvent = formatEvent(event)
     expect(formattedEvent).to.contain('ATTENDEE;RSVP=FALSE;CN=Adam Gibbons:mailto:adam@example.com')
     expect(formattedEvent).to.contain('ATTENDEE;RSVP=TRUE;CN=Brittany Seaton:mailto:brittany@example.com')
   })
   it('writes a busystatus', () => {
-    const eventFree = buildEvent({ busyStatus: "FREE" })
-    const eventBusy = buildEvent({ busyStatus: "BUSY"})
-    const eventTent = buildEvent({ busyStatus: "TENTATIVE"})
-    const eventOOF = buildEvent({ busyStatus: "OOF" })
+    const eventFree = buildEvent({
+      busyStatus: "FREE"
+    })
+    const eventBusy = buildEvent({
+      busyStatus: "BUSY"
+    })
+    const eventTent = buildEvent({
+      busyStatus: "TENTATIVE"
+    })
+    const eventOOF = buildEvent({
+      busyStatus: "OOF"
+    })
     const formattedEventFree = formatEvent(eventFree)
     const formattedEventBusy = formatEvent(eventBusy)
     const formattedEventTent = formatEvent(eventTent)
@@ -192,10 +282,18 @@ describe('pipeline.formatEvent', () => {
     expect(formattedEventOOF).to.contain('X-MICROSOFT-CDO-BUSYSTATUS:OOF')
   })
   it('writes a access classification', () => {
-    const eventPublic = buildEvent({ classification: "PUBLIC" })
-    const eventPrivate = buildEvent({ classification: "PRIVATE"})
-    const eventConfidential = buildEvent({ classification: "CONFIDENTIAL"})
-    const eventAnyClass = buildEvent({ classification: "non-standard-property" })
+    const eventPublic = buildEvent({
+      classification: "PUBLIC"
+    })
+    const eventPrivate = buildEvent({
+      classification: "PRIVATE"
+    })
+    const eventConfidential = buildEvent({
+      classification: "CONFIDENTIAL"
+    })
+    const eventAnyClass = buildEvent({
+      classification: "non-standard-property"
+    })
     const formattedEventPublic = formatEvent(eventPublic)
     const formattedEventPrivate = formatEvent(eventPrivate)
     const formattedEventConfidential = formatEvent(eventConfidential)
@@ -206,21 +304,27 @@ describe('pipeline.formatEvent', () => {
     expect(formattedEventAnyClass).to.contain('CLASS:non-standard-property')
   })
   it('writes an organizer', () => {
-    const event = formatEvent({ organizer: {
-      name: 'Adam Gibbons',
-      email: 'adam@example.com'
-    }})
+    const event = formatEvent({
+      organizer: {
+        name: 'Adam Gibbons',
+        email: 'adam@example.com'
+      }
+    })
     const formattedEvent = formatEvent(event)
     expect(event).to.contain('ORGANIZER;CN=Adam Gibbons:mailto:adam@example.com')
   })
   it('writes an alarm', () => {
-    const formattedEvent = formatEvent({ alarms: [{
-      action: 'audio',
-      trigger: [1997, 2, 17, 1, 30],
-      repeat: 4,
-      duration: { minutes: 15 },
-      attach: 'ftp://example.com/pub/sounds/bell-01.aud'
-    }]})
+    const formattedEvent = formatEvent({
+      alarms: [{
+        action: 'audio',
+        trigger: [1997, 2, 17, 1, 30],
+        repeat: 4,
+        duration: {
+          minutes: 15
+        },
+        attach: 'ftp://example.com/pub/sounds/bell-01.aud'
+      }]
+    })
 
     expect(formattedEvent).to.contain('BEGIN:VALARM')
     expect(formattedEvent).to.contain('TRIGGER;VALUE=DATE-TIME:199702')
@@ -242,16 +346,24 @@ describe('pipeline.formatEvent', () => {
       status: '*'.repeat(1000),
       categories: '*'.repeat(1000),
       organizer: '*'.repeat(1000),
-      attendees: [
-        {name: '*'.repeat(1000), email: '*'.repeat(1000)},
-        {name: '*'.repeat(1000), email: '*'.repeat(1000), rsvp: true}
+      attendees: [{
+          name: '*'.repeat(1000),
+          email: '*'.repeat(1000)
+        },
+        {
+          name: '*'.repeat(1000),
+          email: '*'.repeat(1000),
+          rsvp: true
+        }
       ]
     })
     const max = Math.max(...formattedEvent.split('\r\n').map(line => line.length))
     expect(max).to.be.at.most(75)
   })
   it('writes a recurrence rule', () => {
-    const formattedEvent = formatEvent({ recurrenceRule: 'FREQ=DAILY' })
+    const formattedEvent = formatEvent({
+      recurrenceRule: 'FREQ=DAILY'
+    })
 
     expect(formattedEvent).to.contain('RRULE:FREQ=DAILY')
   })

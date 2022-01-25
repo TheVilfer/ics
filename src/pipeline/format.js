@@ -1,14 +1,14 @@
 import {
-    setAlarm,
-    setContact,
-    setOrganizer,
-    formatDate,
-    setDescription,
-    setLocation,
-    setSummary,
-    setGeolocation,
-    formatDuration,
-    foldLine
+  setAlarm,
+  setContact,
+  setOrganizer,
+  formatDate,
+  setDescription,
+  setLocation,
+  setSummary,
+  setGeolocation,
+  formatDuration,
+  foldLine
 } from '../utils'
 
 export default function formatEvent(attributes = {}) {
@@ -51,11 +51,12 @@ export default function formatEvent(attributes = {}) {
   icsFormat += 'CALSCALE:GREGORIAN\r\n'
   icsFormat += foldLine(`PRODID:${productId}`) + '\r\n'
   icsFormat += foldLine(`METHOD:${method}`) + '\r\n'
+  icsFormat += calName ? (foldLine(`NAME::${calName}`) + '\r\n') : ''
   icsFormat += calName ? (foldLine(`X-WR-CALNAME:${calName}`) + '\r\n') : ''
   icsFormat += `X-PUBLISHED-TTL:PT1H\r\n`
   icsFormat += 'BEGIN:VEVENT\r\n'
   icsFormat += `UID:${uid}\r\n`
-  icsFormat +=  foldLine(`SUMMARY:${title ? setSummary(title) : title}`) + '\r\n'
+  icsFormat += foldLine(`SUMMARY:${title ? setSummary(title) : title}`) + '\r\n'
   icsFormat += `DTSTAMP:${timestamp}\r\n`
 
   // All day events like anniversaries must be specified as VALUE type DATE
